@@ -1,0 +1,5 @@
+You will need node.js (npm) installed to run and test a Vue project. After that, run `npm install` in your terminal while in the "frontend" folder containing the code (not the shell folder). Then run `npm run dev`. It will provide you with a localhost url that will lead you to the site. What's nice about Vue is that you can make changes in your code and the site will dynamically change with your code changes; you don't need to rerun `npm run dev` a million times.
+
+The project is using Vue 3 and Vuetify 3, so when you go to the docs, make sure you're looking at those versions. You will primarily look at Vuetify (https://next.vuetifyjs.com/en/components/all/) for the component help, and any core, internal behavior will be under Vue documentation (https://vuejs.org/guide/introduction.html). 
+
+I installed axios (a package for handling HTTP requests) into the project and am using this article (https://codersdiaries.com/blog/vue-axios) for how to use CRUD operations.
