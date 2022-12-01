@@ -54,7 +54,7 @@
 import axios from "axios";
 
 export default {
-  name: "ItemForm",
+  name: "CreateItemForm",
   data() {
     return {
       valid: true,

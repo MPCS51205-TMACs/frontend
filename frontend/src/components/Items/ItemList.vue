@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="justify-center ma-5" color="blue-lighten-1" @click="getItems">Get All Items</v-btn>
+  <v-btn class="ma-5" color="blue-lighten-1" @click="getItems">Get All Items</v-btn>
   <v-list lines="three">
     <v-list-item
     v-for="item in items"
