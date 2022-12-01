@@ -6,7 +6,7 @@
       <v-tab value="post">Create Item</v-tab>
       <v-tab value="put">Update Item</v-tab>
       <v-tab value="delete">Delete Item</v-tab>
-      <v-tab value="get">Get Items</v-tab>
+<!--      <v-tab value="get">Get Items</v-tab>-->
     </v-tabs>
     <v-window v-model="tab">
       <v-window-item value="post">
@@ -18,9 +18,9 @@
       <v-window-item value="delete">
         <h2 align="center" class="font-weight-light mt-3"> Delete an Item </h2>
         <DeleteItemForm/> </v-window-item>
-      <v-window-item value="get">
-        <h2 align="center" class="font-weight-light mt-3"> Get Items </h2>
-        <ItemList/> </v-window-item>
+<!--      <v-window-item value="get">-->
+<!--        <h2 align="center" class="font-weight-light mt-3"> Get Items </h2>-->
+<!--        <ItemList/> </v-window-item>-->
     </v-window>
   </v-card>
 </template>

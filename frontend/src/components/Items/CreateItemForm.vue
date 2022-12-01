@@ -71,7 +71,7 @@ export default {
     async createItem() {
       try {
         const item = await axios.post(
-          'https://jsonplaceholder.typicode.com/posts',
+          "https://item-service:8080/item/",
           {
             userId: "something",
             description: this.itemDescription,

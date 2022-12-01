@@ -24,7 +24,11 @@ export default {
   methods: {
     async getItems() {
       try {
-        const items = await axios.get("https://run.mocky.io/v3/49ad425d-d3ee-453e-a004-e28df3096da0");
+        const items = await axios.get("https://run.mocky.io/v3/49ad425d-d3ee-453e-a004-e28df3096da0", {
+          data: {
+            // Item stuff here
+          }
+        });
         this.items = items.data
       } catch (e) {
         alert(e)
