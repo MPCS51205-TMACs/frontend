@@ -63,17 +63,17 @@ export default {
       price: null,
       startPrice: null,
       shippingCosts: null,
-      startTime: '',
-      endTime: ''
+      startTime: '2023-12-05 15:00:00.000000',
+      endTime: '2023-12-05 15:30:00.000000'
     };
   },
   methods: {
     async createItem() {
       try {
-        const item = await axios.post(
-          "https://item-service:8080/item/",
+        await axios.post(
+          "/api/item",
           {
-            userId: "something",
+            userId: "0fa23072-f5fc-485b-b307-6156592a7846", // Need to dynamically change this, maybe
             description: this.itemDescription,
             quantity: this.quantity,
             price: this.price,
@@ -87,10 +87,11 @@ export default {
             categories: [],
             bookmarks: []
           }
-        );
-        alert("Status code: " + item.status + "\nitem name: " + this.itemDescription + "\nprice: $" + this.price)
+        ).then(r => {
+          alert("Item created and posted to auction. ID: " + r.data.id)
+        });
       } catch(e) {
-        alert(e)
+        console.log(e)
       }
     }
   }

@@ -41,14 +41,15 @@ export default {
   methods: {
     async updateItem() {
       try {
-        const item = await axios.put("https://item-service:8080/item/" + this.itemId,
+        await axios.put("/api/item/" + this.itemId,
           {
             quantity: this.quantity,
             shippingCosts: this.shippingCosts,
             description: this.description,
             buyNow: this.buyNow
-          });
-        alert("Status code: " + item.status)
+          }).then(r => {
+          alert("Updated item successfully")
+        })
       } catch (e) {
         alert(e)
       }

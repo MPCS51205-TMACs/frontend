@@ -22,8 +22,8 @@ export default {
   methods: {
     async deleteItem() {
       try {
-        await axios.delete("https://item-service:8080/item/" + this.itemId)
-        alert("Item successfully deleted")
+        await axios.delete("/api/item/" + this.itemId)
+        alert("Item " + this.itemId + " successfully deleted")
       } catch (e) {
         alert("ERROR\n" + e)
       }

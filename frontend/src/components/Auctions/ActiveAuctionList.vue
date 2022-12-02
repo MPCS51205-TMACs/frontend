@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-sheet class="font-weight-light text-h5 ma-5 pa-2">
+    <v-sheet class="font-weight-light text-h5 ma-5 pa-2 text-center">
       Current Time: {{this.updateTime}} </v-sheet>
   </div>
   <v-list lines="two">
@@ -10,8 +10,6 @@
       :title="auction.Item">
     </v-list-item>
   </v-list>
-
-
 </template>
 
 <script>
@@ -37,10 +35,11 @@ export default {
   methods: {
     async getAuctions() {
       try {
-        // this.liveAuctions = await axios.get("http://auctions-service:10000/api/v1/activeAuctions");
+        //await axios.get("/api/api/v1/activeAuctions");
         this.updateTime = new Date().toLocaleTimeString();
         this.error = false;
       } catch (e) {
+        console.log(e)
         this.error = true;
       }
     },
