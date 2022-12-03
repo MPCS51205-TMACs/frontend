@@ -51,15 +51,74 @@
     </tr>
   </tfoot>
   </v-table>
+
+  <v-card>
+    <v-divider></v-divider>
+    <v-card-item>
+      <template v-slot:title>
+        Receipts
+        <v-card-actions>
+          <v-btn @click="expand = !expand; getReceiptsForUser()">
+            {{ !expand ? 'Show All' : 'Hide' }}
+          </v-btn>
+        </v-card-actions>
+      </template>
+    </v-card-item>
+    <v-divider></v-divider>
+
+    <v-expand-transition>
+      <div class="py-2" v-if="expand">
+        <v-list lines="three">
+           <div v-if="!receipts.length">No receipts.</div>
+        </v-list>
+        <v-table v-if="receipts.length">
+          <thead>
+          <tr>
+            <th>
+              RECEIPT ID
+            </th>
+            <th >
+              DATE PROCESSED
+            </th>
+            <th >
+              TOTAL
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+            v-for="receipt in receipts"
+            :key="receipt.receipt_id"
+          >
+            <td>{{receipt.receipt_id}}</td>
+            <td>{{receipt.time_processed}}</td>
+            <td>{{this.convertToDollars(receipt.bill.total_cost_cents/100 + (receipt.bill.total_cost_cents*this.tax)/100)}}</td>
+          </tr>
+          </tbody>
+        </v-table>
+      </div>
+    </v-expand-transition>
+  </v-card>
 </template>
 
 
+
 <script>
+/** "receipt_id": "c8b2e377-9860-4e03-955c-d3e139df2e06",
+"user_id": "571d4376-fada-41a7-affa-a797ced90fd1",
+  "time_processed": "2022-12-03 05:36:15.731581",
+  "bill": {
+  "total_cost_str": "$0.00",
+    "total_cost_cents": 0,
+    "items": []
+ **/
 import axios from "axios";
 export default {
   name: "ShoppingCart",
   data() {
     return {
+      expand: false,
+      receipts: [],
       cartItems: [],
       total: 0,
       subTotal: 0,
@@ -73,7 +132,7 @@ export default {
   created() {
     this.getShoppingCart();
     this.calculateCart();
-    //this.timer = setInterval(this.getShoppingCart, 3000);
+    this.timer = setInterval(this.getShoppingCart, 3000);
   },
   methods: {
     async getShoppingCart() {
@@ -149,6 +208,23 @@ export default {
     convertToDollars(item) {
       item = (item / 100).toLocaleString("en-US", {style: "currency", currency: "USD"})
       return item
+    },
+    async getReceiptsForUser(){
+      try {
+        const url = "/api/receipts/?user_id=" + this.userID
+        const response = await axios.get(url, {
+          headers: {
+            'content-type': 'application/json',
+            'authentication': "bearer" + this.token
+          }
+        });
+        this.receipts = response.data;
+        console.log("receipts!")
+        console.log(this.receipts)
+      } catch (e) {
+        log.console("Could not retrieve receipts.")
+        //alert("Could not retrieve shopping cart.\n" + e)
+      }
     }
   }
 }
