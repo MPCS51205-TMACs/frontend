@@ -63,7 +63,6 @@ export default {
       tax: 0,
       shippingCost: 0,
       taxRate: .08,
-      // USE GLOBAL VARS
       userID: "571d4376-fada-41a7-affa-a797ced90fd1",
       token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NzFkNDM3Ni1mYWRhLTQxYTctYWZmYS1hNzk3Y2VkOTBmZDEiLCJhdWQiOiJtcGNzNTEyMDUiLCJpc3MiOiJ1c2VyLXNlcnZpY2UiLCJuYW1lIjoiVWZKYmsxd3h4bXdadnZkIiwiZXhwIjoxNjcwMDg0NjcyLCJpYXQiOjE2NzAwNDE0NzIsImVtYWlsIjoiVWZKYmsxd3h4bXdadnZkQG1wY3MuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl19.8ArtadxEixq3wlfspSSsHIMUWSk5Zkzec7akgSmh0Gc"
     }
@@ -71,13 +70,11 @@ export default {
   created() {
     this.getShoppingCart();
     this.calculateCart();
-    this.timer = setInterval(this.getShoppingCart, 7000);
+    //this.timer = setInterval(this.getShoppingCart, 3000);
   },
   methods: {
     async getShoppingCart() {
       try {
-        //mocky : https://run.mocky.io/v3/7cd25a26-9a5e-47ee-8444-00b6bd3f09ab
-        // endpoint not correct rn , was testing w/ mocky
         const url = "/api/carts/" + this.userID
         const response = await axios.get(url, {
           headers: {
@@ -101,20 +98,12 @@ export default {
         const response = await axios.delete(url, {
           data: { user_id: this.userID, item_id: item_id },
           headers: {
-            // 'application/json' is the modern content-type for JSON, but some
-            // older servers may use 'text/json'.
-            // See: http://bit.ly/text-json
             'content-type': 'application/json',
             'authentication': "bearer" + this.token
           }
         });
         alert("Removing item " + item_id + " from cart.\n")
         this.getShoppingCart()
-        //this.cartItems = response.data.items;
-        //this.total = response.data.total_cost_cents;
-        //this.calculateCart();
-        //this.convertToDollars()
-        //console.log(response.data.items);
       } catch (e) {
         log.console("Could not remove item.")
         alert("Could not remove item\n" + e)
@@ -122,9 +111,26 @@ export default {
       }
       //this.getShoppingCart()
     },
-    checkout() {
-      this.getShoppingCart();
-      alert("You have successfully checked out.");
+    async checkout() {
+      try {
+        const url = "/api/carts/checkout"
+        const response = await axios.post(url,
+          {
+            user_id: this.userID
+          }, {
+            headers: {
+              'content-type': 'application/json',
+              'authentication': "bearer" + this.token
+            }
+          }
+        );
+        alert(response.data.message)
+        this.getShoppingCart()
+      } catch (e) {
+        console.log("Could not checkout")
+        //alert("Could not remove item\n" + e)
+        this.getShoppingCart()
+      }
     },
     calculateCart() {
       this.shippingCost = 0
