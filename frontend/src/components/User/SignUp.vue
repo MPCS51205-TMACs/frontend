@@ -24,12 +24,14 @@
       <v-checkbox v-model="isAdmin" label="Admin"></v-checkbox>
     </v-form>
     <v-div>
-      <v-btn class="border-double ma-3" @click="$router.push('/home')">Sign Up</v-btn>
+      <v-btn class="border-double ma-3" @click="signup">Sign Up</v-btn>
     </v-div>
   </v-card>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "SignUp",
   data() {
@@ -43,7 +45,16 @@ export default {
   },
   methods: {
     async signup() {
-      // Use registration endpoint with axios
+      await axios.post("/api/register", {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        admin: this.isAdmin,
+        paymentMethod: this.paymentMethod
+      }).then(r => {
+        alert("Please return to the sign in page and sign in with your new credentials.")
+        this.$router.push("/");
+      })
     }
   }
 }

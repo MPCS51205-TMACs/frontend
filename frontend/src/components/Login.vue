@@ -17,7 +17,7 @@
         ></v-text-field>
       </v-form>
       <v-div>
-        <v-btn class="text-white bg-amber ma-3" @click="$router.push('/home')">Login</v-btn>
+        <v-btn class="text-white bg-amber ma-3" @click="login">Login</v-btn>
         <v-btn class="border-double ma-3" @click="toSignup">Sign Up</v-btn>
       </v-div>
     </v-card>
@@ -28,6 +28,7 @@
 
 <script>
 import SignUp from "@/components/User/SignUp";
+import axios from "axios";
 export default {
   name: "Login",
   components: {SignUp},
@@ -41,7 +42,13 @@ export default {
   },
   methods: {
     async login() {
-      // Add login endpoint here using axios
+      await axios.post("/api/login", {
+        email: this.email,
+        password: this.password
+      }).then(r => {
+        localStorage.setItem("token", r.data.token);
+        this.$router.push("/home");
+      })
     },
     toSignup() {
       this.showLogin = false;

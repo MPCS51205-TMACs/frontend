@@ -73,7 +73,6 @@ export default {
         await axios.post(
           "/api/item",
           {
-            userId: "0fa23072-f5fc-485b-b307-6156592a7846", // Need to dynamically change this, maybe
             description: this.itemDescription,
             quantity: this.quantity,
             price: this.price,
@@ -86,9 +85,14 @@ export default {
             inappropriate: false,
             categories: [],
             bookmarks: []
+          },
+          {
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("token")
+            }
           }
         ).then(r => {
-          alert("Item created and posted to auction. ID: " + r.data.id)
+          alert("Item created and posted to auction. \nID: " + r.data.id + "\nToken: " + localStorage.getItem("token"))
         });
       } catch(e) {
         console.log(e)
