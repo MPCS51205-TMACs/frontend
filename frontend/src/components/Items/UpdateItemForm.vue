@@ -47,6 +47,11 @@ export default {
             shippingCosts: this.shippingCosts,
             description: this.description,
             buyNow: this.buyNow
+          },
+          {
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("token")
+            }
           }).then(r => {
           alert("Updated item successfully")
         })

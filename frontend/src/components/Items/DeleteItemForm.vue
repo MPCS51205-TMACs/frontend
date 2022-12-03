@@ -22,7 +22,11 @@ export default {
   methods: {
     async deleteItem() {
       try {
-        await axios.delete("/api/item/" + this.itemId)
+        await axios.delete("/api/item/" + this.itemId, {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+          }
+        })
         alert("Item " + this.itemId + " successfully deleted")
       } catch (e) {
         alert("ERROR\n" + e)

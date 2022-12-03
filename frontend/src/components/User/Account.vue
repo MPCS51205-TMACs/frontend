@@ -22,30 +22,70 @@
     <v-expand-transition>
         <div class="py-2" v-if="expand">
           <v-list lines="three">
-            <v-list-item
-              v-for="email in emails"
-              :key="email.id"
-              :title="email.subject">
-            </v-list-item>
-            <v-list-item> <div v-if="!emails.length"><h3>No notifications yet.</h3></div></v-list-item>
+            <div v-if="!emails.length"><h3 style="margin-left:20px">No notifications yet.</h3></div>
           </v-list>
+          <v-table v-if="emails.length">
+            <thead>
+            <tr>
+              <th>
+                FROM
+              </th>
+              <th>
+                DATE SEND
+              </th>
+              <th>
+                SUBJECT
+              </th>
+              <th >
+                MESSAGE
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+              v-for="email in emails"
+              :key="email.email_id"
+            >
+              <td>{{ email.senderEmail }}</td>
+              <td>{{ email.sentDate }}</td>
+              <td>{{ email.subject }}</td>
+              <td>{{ email.body }}</td>
+            </tr>
+
+            </tbody>
+          </v-table>
         </div>
     </v-expand-transition>
   </v-card>
 </template>
 
 <script>
+/**
+ * {
+ *         "id": "07d8f0d6-ded3-4eb6-b54c-472cd1d8fc2a",
+ *         "senderId": "874555dc-7974-4229-ba03-6b000275fca2",
+ *         "receiverId": "874555dc-7974-4229-ba03-6b000275fca2",
+ *         "senderEmail": "alerts@webay.com",
+ *         "receiverEmail": "email",
+ *         "senderName": "Admin",
+ *         "receiverName": "Your name",
+ *         "sentDate": "2022-12-03T04:21:09.231",
+ *         "subject": "Auction end alert!",
+ *         "body": "Auction end alert!",
+ *         "templateType": "auction-end"
+ *     }
+ */
 import axios from "axios";
 export default {
   name: "Account",
   data() {
     return {
-      emails: this.getEmails(),
-      expand: false
+      emails: []//this.getEmails(),
+      ,expand: false
     }
   },
   created() {
-    this.timer = setInterval(this.getEmails, 1000);
+    //this.timer = setInterval(this.getEmails, 1000);
   },
   methods: {
     async getEmails() {
@@ -53,7 +93,7 @@ export default {
               const response = await axios.get("api/api/v1/notification/email");
               this.emails = response.data;
             } catch (e) {
-              log.console("Could not retrieve emails")
+              console.log("Could not retrieve emails")
               //alert("ERROR\n" + e)
        }
     }
