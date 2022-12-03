@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Watchlist from "@/components/User/Watchlist";
+import Watchlist from "@/components/User/Watchlist/Watchlist";
 import ShoppingCart from "@/components/User/ShoppingCart";
 import Account from "@/components/User/Account";
 
