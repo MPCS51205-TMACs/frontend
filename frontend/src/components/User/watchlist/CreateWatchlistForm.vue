@@ -22,6 +22,20 @@
         label="Max Price"
         required
       ></v-text-field>
+      <v-checkbox v-model="mustHaveBuyNow" label="Must Be Buy Now"></v-checkbox>
+      <v-select
+        v-model="categories"
+        :hint="`${categories.length} selected`"
+        :items="categoryOptions"
+        item-title="categoryDescription"
+        label="Categories"
+        return-object
+        persistent-hint
+        single-line
+        multiple
+      >
+
+      </v-select>
       <v-btn color="success" class="mr-4" @click="createWatchlists">Create Item</v-btn>
     </v-form>
   </div>
@@ -29,14 +43,18 @@
 
 <script>
 import {GatewayService, HttpMethod} from "@/service/gatewayService";
+import axios from "axios";
 
 export default {
   name: "CreateWatchlistForm",
   data() {
     return {
-      name: '',
+      name: 'My Watchlist',
       minPrice: 0,
       maxPrice: Infinity.valueOf(),
+      mustHaveBuyNow: false,
+      categories: [],
+      categoryOptions: [{id:"c412ee6a-be4d-4abb-ac8b-9d82808c8ae4",categoryDescription:"Sports"}]
 
     }
   },
@@ -49,19 +67,28 @@ export default {
         name: this.name,
         minPrice: this.minPrice,
         maxPrice: this.maxPrice,
-        categories: [],
-        buyNowEnabled: [{value: true}]
+        categories: this.categories.map(it=> Object({categoryId:it.id})),
+        buyNowEnabled: this.mustHaveBuyNow ? [{value: true}] : [{value: true}, {value: false}]
       }
       await GatewayService.sendRequest(HttpMethod.POST, "watchlist", "", onSuccess, () => {
       }, request)
+    },
+
+    async getCategories(){
+      let onSuccess = (resp) =>{this.categoryOptions = resp.data}
+      await GatewayService.sendRequest(HttpMethod.GET, "category","", onSuccess)
+
     }
 
+  },
+  mounted() {
+    this.getCategories()
   }
 }
 </script>
 
 <style scoped>
-.craete-watchlist-component{
+.craete-watchlist-component {
   width: 50%;
   display: grid;
   grid-template-rows: "10%" "90%";
@@ -71,7 +98,7 @@ export default {
   flex-direction: row;
 }
 
-#create-watchlist-header{
+#create-watchlist-header {
   grid-area: header;
 }
 

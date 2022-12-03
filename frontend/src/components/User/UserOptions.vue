@@ -9,7 +9,7 @@
     </v-tabs>
     <v-window v-model="tab">
       <v-window-item value="watchlist">
-        <h2 align="center" class="font-weight-light mt-3"> My Watchlist </h2>
+        <h2 align="center" class="font-weight-light mt-3">  </h2>
         <Watchlist/> </v-window-item>
       <v-window-item value="shoppingCart">
         <h2 align="center" class="font-weight-light mt-3"> My Shopping Cart </h2>

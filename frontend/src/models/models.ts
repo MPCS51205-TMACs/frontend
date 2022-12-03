@@ -7,7 +7,7 @@ export class Watchlist{
   minPrice: number
   maxPrice: number
   buyNowEnabled : {value: boolean}[]
-  categories: {id: string, name: string}[]
+  categories: {id: string, categoryDescription: string}[]
 }
 
 

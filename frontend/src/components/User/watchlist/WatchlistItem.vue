@@ -12,6 +12,15 @@
       <span><v-icon icon="mdi-cash"></v-icon></span>
       <span>${{ watchlist.minPrice.toFixed(2) }} - ${{ watchlist.maxPrice.toFixed(2) }}</span>
     </div>
+    <div>
+      <span><h3>Categories:</h3> </span>
+      <span class="categories">
+        <span v-for="category of watchlist.categories" class="category">{{ category.categoryDescription }}</span>
+      </span>
+    </div>
+    <div>
+      <span><h3>Must Have Buy Now:</h3> {{ watchlist.buyNowEnabled.length === 1 }}</span>
+    </div>
   </div>
 </template>
 
@@ -30,7 +39,7 @@ export default {
       console.log(this.watchlists)
       let onSuccess = (resp) => {
         console.log(this.watchlists)
-        this.watchlists = this.wacthlists.filter(it=> it.watchlistId!==watchlistId)
+        this.watchlists = this.wacthlists.filter(it => it.watchlistId !== watchlistId)
       }
       await GatewayService.sendRequest(HttpMethod.DELETE, `watchlist/${watchlistId}`, "", onSuccess)
     },
@@ -52,12 +61,18 @@ export default {
 .first-row {
   display: flex;
   flex-direction: row;
-  justify-content:left;
+  justify-content: left;
 }
 
-.center-vert{
+.center-vert {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+}
+
+.categories{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 </style>
