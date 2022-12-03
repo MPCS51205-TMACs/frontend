@@ -1,5 +1,8 @@
 <template>
-  <v-table>
+  <v-list lines="three">
+    <v-list-item> <div v-if="!cartItems.length"><h3>No items in cart.</h3></div></v-list-item>
+  </v-list>
+  <v-table v-if="cartItems.length">
     <thead>
     <tr>
       <th>
