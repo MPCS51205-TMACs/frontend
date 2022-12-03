@@ -12,7 +12,7 @@
         <v-tab value="user"><h2>Profile</h2></v-tab>
       </v-tabs>
       <v-window v-model="tab">
-        <v-window-item value="auctions"> <ActiveAuctionList/> </v-window-item>
+        <v-window-item value="auctions"> <AuctionChoices/> </v-window-item>
         <v-window-item value="items"> <ItemActionChoices/> </v-window-item>
         <v-window-item value="user"> <UserOptions/> </v-window-item>
       </v-window>
@@ -22,14 +22,14 @@
 
 <script>
 import ItemActionChoices from "@/components/Items/ItemActionChoices";
-import ActiveAuctionList from "@/components/Auctions/ActiveAuctionList";
+import AuctionChoices from "@/components/Auctions/AuctionChoices";
 import UserOptions from "@/components/User/UserOptions";
 export default {
   name: "Home",
   components: {
-    UserOptions,
     ItemActionChoices,
-    ActiveAuctionList
+    AuctionChoices,
+    UserOptions,
   },
   data() {
     return {

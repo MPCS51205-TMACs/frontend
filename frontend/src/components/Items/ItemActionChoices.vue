@@ -6,7 +6,7 @@
       <v-tab value="post">Create Item</v-tab>
       <v-tab value="put">Update Item</v-tab>
       <v-tab value="delete">Delete Item</v-tab>
-<!--      <v-tab value="get">Get Items</v-tab>-->
+     <v-tab value="get">Get Items</v-tab>
     </v-tabs>
     <v-window v-model="tab">
       <v-window-item value="post">
