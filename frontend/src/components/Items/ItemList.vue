@@ -1,14 +1,26 @@
 <template>
-  <v-btn class="ma-5" color="blue-lighten-1" @click="getItems">Get All Items</v-btn>
-  <v-list lines="three">
-    <v-list-item
-    v-for="item in items"
-    :key="item.id"
-    :title="item.description">
-      ${{item.price}}
-    </v-list-item>
-  </v-list>
-
+  <div>
+    <v-table>
+      <thead>
+      <tr>
+        <th class="text-h5"> Name </th>
+        <th class="text-h5"> Price </th>
+        <th class="text-h5"> Buy Now</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        v-for="item in items"
+        :key="item.id">
+        <td>{{item.description}}</td>
+        <td>${{item.price}}</td>
+        <td>
+          <v-btn v-if="item.buyNow" color="blue" @click="buyNow"> Buy Now </v-btn>
+        </td>
+      </tr>
+      </tbody>
+    </v-table>
+  </div>
 </template>
 
 <script>
@@ -16,24 +28,35 @@ import axios from "axios";
 
 export default {
   name: "ItemList",
+  mounted() {
+    this.getItems();
+  },
+  created() {
+    this.timer = setInterval(this.getItems, 1000);
+  },
+  beforeDestroy() {
+    this.cancelAutoUpdate();
+  },
   data() {
     return {
-      items: []
+      items: [],
+      timer: ''
     }
   },
   methods: {
     async getItems() {
-      try {
-        const items = await axios.get("https://run.mocky.io/v3/49ad425d-d3ee-453e-a004-e28df3096da0", {
-          data: {
-            // Item stuff here
-          }
-        });
-        this.items = items.data
-      } catch (e) {
-        alert(e)
-      }
+      await axios.get("/api/item/all")
+        .then(r => this.items = r.data)
+        .catch(reason => {
+          console.log("ERROR in retrieving item data")
+        })
+    },
+    async buyNow() {
+      // await axios.post()
     }
+  },
+  cancelAutoUpdate() {
+    clearInterval(this.timer);
   }
 }
 </script>
