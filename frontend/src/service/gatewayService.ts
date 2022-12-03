@@ -9,8 +9,8 @@ export enum HttpMethod {
 
 export class GatewayService {
 
-  static url: string = 'http://localhost:8080'
-  static token: string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlN2YxNDI0OC03MWM3LTQ5MGQtOWYzOC0yNDdiMjRmNzI4YWEiLCJpc3MiOiJ1c2VyLXNlcnZpY2UiLCJhdWQiOiJtcGNzNTEyMDUiLCJlbWFpbCI6Im1hdHRfQG1wY3MuY29tIiwibmFtZSI6Im1hdHQiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjY5NDA4MDk1LCJleHAiOjE2NzIwMDAwOTV9.j0_T0boKVL0MMpTmI_xSUfc3M25MoWqeo-Sdg9fVelQ"
+  static url: string = '/api'
+  static token: string = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MGY1MjQxYi05ZjM1LTRhMzItYjE4Ni02NTViY2Y2ZjQ5ZmQiLCJhdWQiOiJtcGNzNTEyMDUiLCJyZXZvY2F0aW9uSWQiOiIxZTc2NTg1Mi05NWE2LTQ4MjUtOWZmZi0wMzgwNGZlNTA4ODkiLCJpc3MiOiJ1c2VyLXNlcnZpY2UiLCJuYW1lIjoibWF0dCIsImV4cCI6MTY3MDEzMDQzNiwiaWF0IjoxNjcwMDg3MjM2LCJlbWFpbCI6Im1hdHRAbXBjcy5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl19.zHxshygIKyBWJQGXWlKV1dDo4r8PJwnWKSBPhVAbw1Q"
   static defaultFunction: CallableFunction = () => {
   }
 
@@ -40,7 +40,12 @@ export class GatewayService {
         req = axios.put(url, body, authorization)
         break
     }
-    await req.then(resp => onSuccess(resp)).catch(onFailure())
+
+    const onCatch = (e)=>{
+      alert(e)
+      onFailure()
+    }
+    await req.then(resp => onSuccess(resp)).catch(onCatch)
 
 
   }
