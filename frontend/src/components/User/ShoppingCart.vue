@@ -6,8 +6,9 @@
       :title="item.description">
       ${{item.price}}
     </v-list-item>
+    <v-list-item> <div v-if="!cartItems.length"><h3>No items in cart</h3></div></v-list-item>
   </v-list>
-  <v-btn label="Checkout" color="red" class="ma-5" @click="checkout">Checkout</v-btn>
+  <v-btn v-if="cartItems.length" label="Checkout" color="red" class="ma-5" @click="checkout">Checkout</v-btn>
 </template>
 
 <script>
@@ -23,8 +24,7 @@ export default {
       // Call GET endpoint to shopping cart
     },
     checkout() {
-      this.cartItems = [];
-      alert("You have successfully checkout.");
+      alert("You have successfully checked out.");
     }
   }
 }

@@ -5,7 +5,7 @@
             v-model="tab">
       <v-tab value="watchlist">Watchlist</v-tab>
       <v-tab value="shoppingCart">My Shopping Cart</v-tab>
-      <v-tab value="optional">Optional?</v-tab>
+      <v-tab value="account">Account</v-tab>
     </v-tabs>
     <v-window v-model="tab">
       <v-window-item value="watchlist">
@@ -14,8 +14,9 @@
       <v-window-item value="shoppingCart">
         <h2 align="center" class="font-weight-light mt-3"> My Shopping Cart </h2>
         <ShoppingCart/> </v-window-item>
-      <v-window-item value="optional">
-        <h2 align="center" class="font-weight-light mt-3"> Something Else Maybe? </h2> </v-window-item>
+      <v-window-item value="account">
+        <h2 align="center" class="font-weight-light mt-3"> Account </h2>
+        <Account/></v-window-item>
     </v-window>
   </v-card>
 </template>
@@ -23,9 +24,11 @@
 <script>
 import Watchlist from "@/components/User/Watchlist";
 import ShoppingCart from "@/components/User/ShoppingCart";
+import Account from "@/components/User/Account";
+
 export default {
   name: "UserOptions",
-  components: {ShoppingCart, Watchlist},
+  components: {ShoppingCart, Watchlist, Account},
   data() {
     return {
       tab: ''
