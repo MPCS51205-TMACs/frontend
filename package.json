@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "vue-scrollable-container": "^1.8.2",
+    "vue-splitpane": "^1.0.6"
+  }
+}
