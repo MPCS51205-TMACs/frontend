@@ -53,7 +53,8 @@ export default {
               const response = await axios.get("api/api/v1/notification/email");
               this.emails = response.data;
             } catch (e) {
-              alert("ERROR\n" + e)
+              log.console("Could not retrieve emails")
+              //alert("ERROR\n" + e)
        }
     }
    }
