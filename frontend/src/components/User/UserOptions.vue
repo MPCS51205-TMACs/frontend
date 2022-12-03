@@ -9,7 +9,7 @@
     </v-tabs>
     <v-window v-model="tab">
       <v-window-item value="watchlist">
-        <h2 align="center" class="font-weight-light mt-3"> My Watchlist </h2>
+        <h2 align="center" class="font-weight-light mt-3">  </h2>
         <Watchlist/> </v-window-item>
       <v-window-item value="shoppingCart">
         <h2 align="center" class="font-weight-light mt-3"> My Shopping Cart </h2>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Watchlist from "@/components/User/Watchlist";
+import Watchlist from "@/components/User/Watchlist/Watchlist";
 import ShoppingCart from "@/components/User/ShoppingCart";
 import Account from "@/components/User/Account";
 
