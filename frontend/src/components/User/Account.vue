@@ -80,12 +80,12 @@ export default {
   name: "Account",
   data() {
     return {
-      emails: []//this.getEmails(),
+      emails: this.getEmails()
       ,expand: false
     }
   },
   created() {
-    //this.timer = setInterval(this.getEmails, 1000);
+    this.timer = setInterval(this.getEmails, 1000);
   },
   methods: {
     async getEmails() {
