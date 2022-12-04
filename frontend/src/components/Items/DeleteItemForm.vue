@@ -28,6 +28,7 @@ export default {
           }
         })
         alert("Item " + this.itemId + " successfully deleted")
+        this.$refs.form.reset()
       } catch (e) {
         alert("ERROR\n" + e)
       }

@@ -94,6 +94,7 @@ export default {
           }
         ).then(r => {
           alert("Item created and posted to auction. \nID: " + r.data.id)
+          this.$refs.form.reset()
         });
       } catch(e) {
         console.log(e)

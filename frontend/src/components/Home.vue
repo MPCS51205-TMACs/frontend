@@ -3,10 +3,6 @@
     <v-toolbar class="header d-flex justify-center align-center flex-column">
       <v-toolbar-title class="text-white text-h2 text-center font-weight-bold">Webay</v-toolbar-title>
     </v-toolbar>
-    <v-sheet>
-      <h3 class="ma-5 font-weight-light text-center" v-if="!admin">Welcome, User</h3>
-      <h3 class="ma-5 font-weight-light text-center" v-if="admin">Welcome, Admin</h3>
-    </v-sheet>
     <v-card>
       <v-tabs bg-color="blue-darken-4"
               grow
