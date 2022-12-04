@@ -321,18 +321,18 @@ td {
   background: rgba(218, 218, 218, 0.363) !important; 
 }
 
-.green-bg {
+.green-bg:hover {
   background: rgba(0, 255, 0, 0.657) !important; 
 }
 
-.blue-bg {
+.blue-bg:hover {
   background: rgba(180, 225, 255, 0.657) !important; 
 }
 
-.pink-bg {
+.pink-bg:hover {
   background: rgba(255, 179, 179, 0.657) !important; 
 }
-.grey-bg {
+.grey-bg:hover {
   background: rgba(218, 218, 218, 0.657) !important; 
 }
 </style>

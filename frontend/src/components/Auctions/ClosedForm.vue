@@ -158,8 +158,4 @@ td {
   background: rgba(218, 218, 218, 0.657) !important; 
 }
 
-
-img {
-  height: 10px !important;
-}
 </style>
