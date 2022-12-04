@@ -120,6 +120,7 @@ export default {
       expand: false,
       receipts: [],
       cartItems: [],
+      itemNames: [],
       total: 0,
       subTotal: 0,
       tax: 0,
@@ -132,7 +133,7 @@ export default {
   created() {
     this.getShoppingCart();
     //this.calculateCart();
-    this.timer = setInterval(this.getShoppingCart, 3000);
+    this.timer = setInterval(this.getShoppingCart, 9000);
     //this.getUserId()
   },
   methods: {
@@ -163,10 +164,12 @@ export default {
         this.cartItems = response.data.items;
         this.total = response.data.total_cost_cents;
         this.calculateCart();
-        this.convertToDollars()
+        this.convertToDollars();
+        console.log("ITEMS BEFORE GET NAMES:" + this.cartItems[0].item_id)
+        this.getItemNames();
         console.log(response.data.items);
       } catch (e) {
-        console.log("Could not retrieve shopping cart.")
+        console.log("Could not retrieve shopping cart." + e)
         //alert("Could not retrieve shopping cart.\n" + e)
       }
     },
@@ -238,9 +241,35 @@ export default {
         console.log("receipts!")
         console.log(this.receipts)
       } catch (e) {
-        log.console("Could not retrieve receipts.")
+        console.log("Could not retrieve receipts.")
         //alert("Could not retrieve receipts.\n" + e)
       }
+    },
+    async getNameOfItemById(id){
+      console.log("ID IS" + id)
+      try {
+        const url = "/api/item/" + id
+        const response = await axios.get(url, {
+          headers: {
+            'content-type': 'application/json',
+            'Authorization': "Bearer " + localStorage.getItem("token")
+          }
+        });
+        console.log("Got item by id: "+ response.data.id)
+        return id
+      } catch (e) {
+        console.log("Could not retrieve item"+ e)
+        return id
+        //alert("Could not retrieve receipts.\n" + e)
+      }
+      //return response.data.description
+    },
+    async getItemNames() {
+      for (let i = 0; i < this.cartItems.length; i++) {
+        let item_name = await this.getNameOfItemById(this.cartItems[i].item_id)
+        this.cartItems[i].name = item_name
+      }
+      //console.log("AFTER ADDING GET ITEM NAMES:", this.cartItems)
     }
   }
 }
