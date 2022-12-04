@@ -25,7 +25,7 @@ export class GatewayService {
   ) {
     let url = `${(GatewayService.url)}/${endpoint}?${query}`
     // TODO: remove default token
-    let authorization = {headers: {'Authorization': `Bearer ${this.token}`}}
+    let authorization = {headers: {'Authorization': `Bearer ${localStorage.getItem("token")!=null ? localStorage.getItem("token") : this.token}`}}
     let req: Promise<AxiosResponse>
 
     switch (method) {
