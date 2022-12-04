@@ -1,13 +1,10 @@
 <template>
-<v-form
+<v-form 
   lazy-validation
   class="ma-5">
   <v-text-field
     v-model="itemId" label="Item Id" required>
   </v-text-field>
-  <!-- <v-text-field
-  v-model="userId" label="User Id" required>
-  </v-text-field> -->
   <v-text-field
     v-model.number="offerAmountDollars" label="Offer Amount $" placeholder="0">
   </v-text-field>

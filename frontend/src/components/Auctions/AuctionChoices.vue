@@ -10,34 +10,38 @@
       <v-tab value="bidquery">user-bid-item query</v-tab>
       <v-tab v-on:click="this.$refs.closedComponentRef.getClosedAuctions()" value="closed">closed</v-tab>
     </v-tabs>
+    <div height="20px">
+      <v-sheet class="font-weight-light text-h5 pa-2">
+      [UTC] {{this.timeStr}}</v-sheet>
+    </div>
     <v-window v-model="tab">
       <v-window-item value="all">
-        <h2 align="center" class="font-weight-light mt-3"> Post an Item for Auction </h2>
+        <h2 align="center" class="font-weight-light mt-3"> </h2>
         <AllForm ref="allComponentRef"/>
       </v-window-item>
 
       <v-window-item value="live">
-        <h2 align="center" class="font-weight-light mt-3"> Update an Item </h2>
-        <LiveForm ref="liveComponentRef"/> 
+        <h2 align="center" class="font-weight-light mt-3"> </h2>
+        <LiveForm ref="liveComponentRef" :timeDateChild="timeDate"/> 
       </v-window-item>
 
       <v-window-item value="bid">
-        <h2 align="center" class="font-weight-light mt-3"> place bid </h2>
+        <h2 align="center" class="font-weight-light mt-3"> </h2>
         <BidForm/>
       </v-window-item>
 
       <v-window-item value="stop">
-        <h2 align="center" class="font-weight-light mt-3"> stop auction </h2>
+        <h2 align="center" class="font-weight-light mt-3"> </h2>
         <StopForm/>
       </v-window-item>
 
       <v-window-item value="bidquery">
-        <h2 align="center" class="font-weight-light mt-3"> user-bid-item query </h2>
+        <h2 align="center" class="font-weight-light mt-3"> </h2>
         <BidQueryForm/>
       </v-window-item>
 
       <v-window-item value="closed">
-        <h2 align="center" class="font-weight-light mt-3"> view closed auction metrics </h2>
+        <h2 align="center" class="font-weight-light mt-3"> </h2>
         <ClosedForm ref="closedComponentRef"/> 
       </v-window-item>
 
@@ -68,9 +72,42 @@ export default {
   },
   data() {
     return {
-      tab: null
+      tab: null,
+      timeStr: '',
+      timeDate: new Date(),
     }
   },
+  created() {
+    // this.getActiveAuctions();
+    this.timer = setInterval(this.updateTheTime, 1000);
+  },
+  beforeDestroy() {
+    this.cancelAutoUpdate();
+  },
+  methods: {
+    cancelAutoUpdate() {
+      clearInterval(this.timer);
+    },
+    getUTCTimeStr(date) {
+      return [
+        date.getUTCFullYear(),
+        this.padTo2Digits(date.getUTCMonth()+ 1),
+        this.padTo2Digits(date.getUTCDate()),
+      ].join("-")+" "+[
+        this.padTo2Digits(date.getUTCHours()),
+        this.padTo2Digits(date.getUTCMinutes()),
+        this.padTo2Digits(date.getUTCSeconds()),
+      ].join(':');
+    },
+    padTo2Digits(num) {
+      return num.toString().padStart(2, '0');
+    },
+    updateTheTime() {
+      let date = new Date();
+      this.timeDate = date;
+      this.timeStr = this.getUTCTimeStr(date);
+    }
+  }
 
 }
 </script>

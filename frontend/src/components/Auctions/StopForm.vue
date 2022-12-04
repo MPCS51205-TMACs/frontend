@@ -28,7 +28,7 @@
       async stopAuction() {
         try {
           await axios.post(
-            "/api/api/v1/stopAuction/"+this.itemId,
+            "/api/api/v1/stopAuction/"+this.itemId,{},
             { 
               headers: {"Authorization" : "Bearer "+localStorage.getItem("token")},
             }
