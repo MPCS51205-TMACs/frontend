@@ -1,4 +1,52 @@
 <template>
+  <v-container  >
+      <v-row
+        align="start"
+        no-gutters
+        style="height: 100%;"
+       >
+       <!-- show PENDING -->
+        <v-col>
+          <v-sheet height="34">
+            <v-checkbox 
+              v-model="showPending"
+              label="Pending"
+              density="compact"
+            ></v-checkbox>
+          </v-sheet>
+        </v-col>
+        <v-col>
+          <v-sheet height="34">
+            <v-checkbox 
+              v-model="showActive"
+              label="Active"
+              density="compact"
+            ></v-checkbox>
+          </v-sheet>
+        </v-col>
+        <v-col>
+          <v-sheet height="34">
+            <v-checkbox 
+              v-model="showOver"
+              label="Over"
+              density="compact"
+            ></v-checkbox>
+          </v-sheet>
+        </v-col>
+        <v-col>
+          <v-sheet height="34">
+            <v-checkbox 
+              v-model="showFinalized"
+              label="Finalized"
+              density="compact"
+            ></v-checkbox>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-container>
+  <!-- <div><v-checkbox label="Checkbox"></v-checkbox>
+  <v-checkbox label="Checkbox"></v-checkbox></div> -->
+  
   <v-table density="compact" height="350px"> 
     <!-- fixed-header="true -->
       <thead>
@@ -21,6 +69,7 @@
         <tr v-bind:class="getColorClass(auction.state)"
           v-for="auction in auctions"
           :key="auction.name"
+          v-show="this.shouldShow(auction)"
         > 
           <td>{{ auction.itemid }}</td>
           <td>{{ auction.starttime }}</td>
@@ -40,7 +89,11 @@ export default {
   name: "ItemList",
   data() {
     return {
-      auctions: []
+      auctions: [],
+      showPending: true,
+      showActive: true,
+      showOver: true,
+      showFinalized: true,
     }
   },
   mounted() {
@@ -87,6 +140,27 @@ export default {
       }
       return classToUse;
     },
+    shouldShow(auction) {
+      var should=false;
+      switch (auction.state) {
+        case 'ACTIVE':
+          should = this.showActive;
+          break;
+        case 'OVER':
+          should = this.showOver;
+          break;
+        case 'PENDING':
+          should = this.showPending;
+          break;
+        case 'FINALIZED':
+          should = this.showFinalized;
+          break;
+        case 'CANCELED':
+          should = this.showOver;
+          break;
+      }
+      return should;
+    }
   },    
 }
 </script>
