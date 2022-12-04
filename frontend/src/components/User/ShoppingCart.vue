@@ -124,22 +124,40 @@ export default {
       subTotal: 0,
       tax: 0,
       shippingCost: 0,
-      taxRate: .08
+      taxRate: .08,
+      userId: '',
+      //token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhMjY5YThmMi1hYmRhLTRlYmQtYjdkYi0xN2Q1OTlkMDhhMzkiLCJhdWQiOiJtcGNzNTEyMDUiLCJyZXZvY2F0aW9uSWQiOiIxZjI1NzZjZi01ZmNmLTQ5MDQtYWNhMy0xZDExMDU3NzA1NTkiLCJpc3MiOiJ1c2VyLXNlcnZpY2UiLCJuYW1lIjoiaDBQZmY3bENCUWN0QXdmIiwiZXhwIjoxNjcwMTczMDExLCJpYXQiOjE2NzAxMjk4MTEsImVtYWlsIjoiaDBQZmY3bENCUWN0QXdmQG1wY3MuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl19.0Ztu570lUNvsUqay918igbHsDgbIM9GQ8RODRXhun2g'
     }
   },
   created() {
     this.getShoppingCart();
-    this.calculateCart();
+    //this.calculateCart();
     this.timer = setInterval(this.getShoppingCart, 3000);
+    //this.getUserId()
   },
   methods: {
-    async getShoppingCart() {
+    async getUserId(){
       try {
-        const url = "/api/carts/" + localStorage.getItem("userId")
+        const url = "/api/user"
+        const response = await axios.get(url, {
+          headers: {
+            'Authorization': "Bearer " + localStorage.getItem("token")
+            //'authentication': "Bearer" + this.token
+          }
+        });
+        this.userId = response.data.id;
+      } catch (e) {
+        console.log("Could not retrieve user id." + response)
+      }
+    },
+    async getShoppingCart() {
+      this.getUserId()
+      try {
+        const url = "/api/carts/" + this.userId
         const response = await axios.get(url, {
           headers: {
             'content-type': 'application/json',
-            'authentication': "bearer" + localStorage.getItem("token")
+            'Authorization': "Bearer " + localStorage.getItem("token")
           }
         });
         this.cartItems = response.data.items;
@@ -148,7 +166,7 @@ export default {
         this.convertToDollars()
         console.log(response.data.items);
       } catch (e) {
-        log.console("Could not retrieve shopping cart.")
+        console.log("Could not retrieve shopping cart.")
         //alert("Could not retrieve shopping cart.\n" + e)
       }
     },
@@ -156,38 +174,39 @@ export default {
       try {
         const url = "/api/carts/item"
         const response = await axios.delete(url, {
-          data: { user_id: localStorage.getItem("userId"), item_id: item_id },
+          data: { user_id: this.userId, item_id: item_id },
           headers: {
             'content-type': 'application/json',
-            'authentication': "bearer" + localStorage.getItem("token")
+            'Authorization': "Bearer" + localStorage.getItem("token")
           }
         });
         alert("Removing item " + item_id + " from cart.\n")
         this.getShoppingCart()
       } catch (e) {
-        log.console("Could not remove item.")
+        console.log("Could not remove item.")
         alert("Could not remove item\n" + e)
         this.getShoppingCart()
       }
     },
     async checkout() {
+      let response = ""
       try {
         const url = "/api/carts/checkout"
-        const response = await axios.post(url,
+        response = await axios.post(url,
           {
-            user_id: localStorage.getItem("userId")
-          }, {
+           user_id: this.userId }, {
             headers: {
               'content-type': 'application/json',
-              'authentication': "bearer" + localStorage.getItem("token")
+              'Authorization': "Bearer " + localStorage.getItem("token")
             }
           }
         );
-        alert(response.data)
+        alert("could not checkout")
+        console.log(response)
         this.getShoppingCart()
       } catch (e) {
-        console.log("Could not checkout")
-        alert("Could not Checkout!\n" + response.data.message + e)
+        console.log("Could not checkout" + e.response)
+        alert("Could not Checkout!\n" + e.response.data.message)
         this.getShoppingCart()
       }
     },
@@ -208,11 +227,11 @@ export default {
     },
     async getReceiptsForUser(){
       try {
-        const url = "/api/receipts/?user_id=" + localStorage.getItem("userId")
+        const url = "/api/receipts/?user_id=" + this.userId
         const response = await axios.get(url, {
           headers: {
             'content-type': 'application/json',
-            'authentication': "bearer" + localStorage.getItem("token")
+            'Authorization': "Bearer " + localStorage.getItem("token")
           }
         });
         this.receipts = response.data;
