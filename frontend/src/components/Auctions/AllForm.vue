@@ -2,8 +2,6 @@
   <v-container  >
       <v-row
         align="start"
-        no-gutters
-        style="height: 100%;"
        >
        <!-- show PENDING -->
         <v-col>
@@ -15,6 +13,7 @@
             ></v-checkbox>
           </v-sheet>
         </v-col>
+        <!-- show ACTIVE -->
         <v-col>
           <v-sheet height="34">
             <v-checkbox 
@@ -24,6 +23,7 @@
             ></v-checkbox>
           </v-sheet>
         </v-col>
+        <!-- show OVER -->
         <v-col>
           <v-sheet height="34">
             <v-checkbox 
@@ -33,6 +33,7 @@
             ></v-checkbox>
           </v-sheet>
         </v-col>
+        <!-- show FINALIZED -->
         <v-col>
           <v-sheet height="34">
             <v-checkbox 
@@ -50,6 +51,7 @@
   <v-table density="compact" height="350px"> 
     <!-- fixed-header="true -->
       <thead>
+
         <tr>
           <th class="text-left">
             Item Id
@@ -90,6 +92,7 @@ export default {
   data() {
     return {
       auctions: [],
+      auctionItemIds: [],
       showPending: true,
       showActive: true,
       showOver: true,
@@ -111,6 +114,11 @@ export default {
           // console.log(r);
           // console.log(r.data);
           this.auctions = r.data.auctions;
+
+          for (const [key, auction] of Object.entries(this.auctions)) {
+            this.auctionItemIds.push(auction.itemid);
+          }
+
         });
       } catch(e) {
         console.log(e)
