@@ -1,4 +1,81 @@
 <template>
+  <v-card ref="account">
+    <v-card-item>
+      <v-container>
+        <v-row
+          justify="space-between"
+        >
+          <v-col>
+          <v-table v-if="emails.length" class="ma-1">
+            <thead>
+            <tr>
+              <th>
+                PROFILE INFORMATION
+              </th>
+              <th></th>
+              <th>Update</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td><b>Name: </b></td>
+              <td align="left">your name</td>
+              <td><v-form
+                ref="form"
+                v-model="valid"
+                lazy-validation
+                class="ma-2"
+              >
+                <v-text-field
+                  v-model="Name"
+                  label="Name"
+                  required
+                ></v-text-field>
+                <v-btn color="success" class="mr-4" size="small" @click="updateProfile">Update Name</v-btn>
+              </v-form></td>
+            </tr>
+            <tr>
+              <td><b>Email: </b></td>
+              <td align="left">your email</td>
+              <td><v-form
+              ref="form"
+              class="ma-2"
+            >
+              <v-text-field
+                label="Name"
+                required
+                size="small"
+              ></v-text-field>
+              <v-btn color="success" class="mr-4" size="small" @click="updateProfile">Update Name</v-btn>
+            </v-form>
+            </td>
+            </tr>
+            <tr>
+              <td><b>Payment info: </b></td>
+              <td align="left">payment info</td>
+              <td><v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+              class="ma-2"
+            >
+              <v-text-field
+                v-model="Name"
+                label="Name"
+                required
+              ></v-text-field>
+              <v-btn color="success" class="mr-4" size="small" @click="updateProfile">Update Name</v-btn>
+            </v-form>
+            </td>
+            </tr>
+            </tbody>
+          </v-table>
+          </v-col>
+
+        </v-row>
+      </v-container>
+    </v-card-item>
+  </v-card>
   <v-card>
     <v-divider></v-divider>
     <v-card-item>
