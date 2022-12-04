@@ -21,6 +21,8 @@
   </v-radio-group>
 
   <v-btn color="success" class="mr-4" @click="updateItem">Update Item</v-btn>
+
+  <h2 align="center" class="font-weight-light mt-3"> Add Category to Item </h2>
 </v-form>
   <v-card>
     <v-form
@@ -72,18 +74,18 @@ export default {
       } catch (e) {
         alert(e)
       }
+      this.$refs.form.reset()
     },
     async addCategory() {
       try {
-        await axios.put("/api/item/category/" + this.itemId, {
-          category: this.category
-        }, {
+        await axios.put("/api/item/category/" + this.itemId, this.category, {
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("token"),
             "Content-Type": "text/plain"
           }
         }).then(r => { alert("Added " + this.category + " to item.")})
       } catch (e) { console.log(e) }
+      this.$refs.form.reset()
     }
   }
 }

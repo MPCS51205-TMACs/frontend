@@ -57,6 +57,7 @@ export default {
         admin: this.isAdmin,
         paymentMethod: this.paymentMethod
       }).then(r => {
+        console.log("Admin: " + this.isAdmin.toString())
         this.error = false
         this.$emit('signupStatus', this.signupSuccess = true)
       }).catch(reason => {

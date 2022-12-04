@@ -16,7 +16,7 @@
         <td>{{item.description}}</td>
         <td>${{item.price}}</td>
         <td>
-          <v-btn color="blue" @click="buyNow(item)"> Buy Now </v-btn>
+          <v-btn v-if="item.buyNow" color="blue" @click="buyNow(item)"> Buy Now </v-btn>
         </td>
         <td>
           <v-btn color="amber" @click="bookmark(item)"> Bookmark </v-btn>
