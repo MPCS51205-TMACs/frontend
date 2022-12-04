@@ -10,6 +10,7 @@ export enum HttpMethod {
 export class GatewayService {
 
   static url: string = '/api'
+
   static token: string = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4MGY1MjQxYi05ZjM1LTRhMzItYjE4Ni02NTViY2Y2ZjQ5ZmQiLCJhdWQiOiJtcGNzNTEyMDUiLCJyZXZvY2F0aW9uSWQiOiIxZTc2NTg1Mi05NWE2LTQ4MjUtOWZmZi0wMzgwNGZlNTA4ODkiLCJpc3MiOiJ1c2VyLXNlcnZpY2UiLCJuYW1lIjoibWF0dCIsImV4cCI6MTY3MDEzMDQzNiwiaWF0IjoxNjcwMDg3MjM2LCJlbWFpbCI6Im1hdHRAbXBjcy5jb20iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiLCJST0xFX0FETUlOIl19.zHxshygIKyBWJQGXWlKV1dDo4r8PJwnWKSBPhVAbw1Q"
   static defaultFunction: CallableFunction = () => {
   }
@@ -24,8 +25,9 @@ export class GatewayService {
   ) {
     let url = `${(GatewayService.url)}/${endpoint}?${query}`
     // TODO: remove default token
-    let authorization = {headers: {'Authorization': `Bearer ${localStorage.getItem("token") ? localStorage.getItem("token") : this.token}`}}
+    let authorization = {headers: {'Authorization': `Bearer ${this.token}`}}
     let req: Promise<AxiosResponse>
+
     switch (method) {
       case HttpMethod.DELETE:
         req = axios.delete(url, authorization)
@@ -45,6 +47,8 @@ export class GatewayService {
       alert(e)
       onFailure()
     }
+
+    console.log({url: url, auth: authorization, body: body, method: method})
     await req.then(resp => onSuccess(resp)).catch(onCatch)
 
 

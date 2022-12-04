@@ -11,15 +11,21 @@
         <h2 align="center" class="font-weight-light mt-3"></h2>
         <UserAdmin/>
       </v-window-item>
+      <v-window-item value="item">
+        <h2 align="center" class="font-weight-light mt-3"></h2>
+        <ItemAdmin/>
+      </v-window-item>
     </v-window>
   </v-card>
 </template>
 
 <script>
 import UserAdmin from "@/components/Admin/UserAdmin";
+import ItemActionChoices from "@/components/Items/ItemActionChoices";
+import ItemAdmin from "@/components/Admin/ItemAdmin";
 export default {
   name: "AdminOptions",
-  components: {UserAdmin},
+  components: {ItemAdmin, ItemActionChoices, UserAdmin},
   data() {
     return {
       tab: ''
