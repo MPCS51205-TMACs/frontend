@@ -22,6 +22,19 @@
 
   <v-btn color="success" class="mr-4" @click="updateItem">Update Item</v-btn>
 </v-form>
+  <v-card>
+    <v-form
+    lazy-validation
+    class="ma-5">
+      <v-text-field
+        v-model="itemId" label="Item Id" required>
+      </v-text-field>
+      <v-text-field
+        v-model="category" label="Add Category">
+      </v-text-field>
+      <v-btn color="success" class="mr-4" @click="addCategory">Add Category</v-btn>
+    </v-form>
+  </v-card>
 </template>
 
 <script>
@@ -35,7 +48,8 @@ export default {
       quantity: null,
       shippingCosts: null,
       description: null,
-      buyNow: null
+      buyNow: null,
+      category: ''
     }
   },
   methods: {
@@ -58,6 +72,18 @@ export default {
       } catch (e) {
         alert(e)
       }
+    },
+    async addCategory() {
+      try {
+        await axios.put("/api/item/category/" + this.itemId, {
+          category: this.category
+        }, {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "text/plain"
+          }
+        }).then(r => { alert("Added " + this.category + " to item.")})
+      } catch (e) { console.log(e) }
     }
   }
 }

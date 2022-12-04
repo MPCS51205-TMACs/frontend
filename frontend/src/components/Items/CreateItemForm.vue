@@ -81,6 +81,7 @@ export default {
             startTime: this.startTime,
             endTime: this.endTime,
             buyNow: true,
+            bought: false,
             counterfeit: false,
             inappropriate: false,
             categories: [],
@@ -92,7 +93,7 @@ export default {
             }
           }
         ).then(r => {
-          alert("Item created and posted to auction. \nID: " + r.data.id + "\nToken: " + localStorage.getItem("token"))
+          alert("Item created and posted to auction. \nID: " + r.data.id)
         });
       } catch(e) {
         console.log(e)
