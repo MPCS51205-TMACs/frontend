@@ -11,7 +11,7 @@
       return-object
       single-line
     ></v-select>
-    <v-btn color="success" class="mr-4" @click="deleteCategory">Delete Category</v-btn>
+    <v-btn color="red" class="mr-4" @click="deleteCategory">Delete Category</v-btn>
   </v-card>
   <v-divider></v-divider>
   <v-card>
@@ -23,7 +23,7 @@
       single-line
     ></v-select>
     <v-text-field v-model="modification"></v-text-field>
-    <v-btn color="success" class="mr-4" @click="modifyCategory">Modify Category</v-btn>
+    <v-btn color="blue" class="mr-4" @click="modifyCategory">Modify Category</v-btn>
   </v-card>
   <v-divider></v-divider>
 

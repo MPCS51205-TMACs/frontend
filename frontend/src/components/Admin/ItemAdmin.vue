@@ -1,25 +1,28 @@
 <template>
   <v-btn class="mr-4" @click="refresh">Refresh</v-btn>
   <v-card>
-    <v-select
-      v-model="inappropriate"
-      :items="items"
-      item-title="description"
-      return-object
-      single-line
-    ></v-select>
-    <v-btn color="success" class="mr-4" @click="markInappropriate">Mark Inappropriate</v-btn>
-  </v-card>
-  <v-divider></v-divider>
-  <v-card>
-    <v-select
-      v-model="counterfeit"
-      :items="items"
-      item-title="description"
-      return-object
-      single-line
-    ></v-select>
-    <v-btn color="success" class="mr-4" @click="markCounterfeit">Mark Counterfeit</v-btn>
+    <v-table>
+      <thead>
+      <tr>
+        <th class="text-h5"> Name </th>
+        <th class="text-h5"> Counterfeit </th>
+        <th class="text-h5"> Inappropriate</th>
+        <th class="text-h5"> </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        v-for="item in items"
+        :key="item.id">
+        <td>{{item.description}}</td>
+        <td>{{item.counterfeit}}</td>
+        <td>{{item.inappropriate}}</td>
+        <td>
+          <v-btn color="red" @click="deleteItem(item.id)"> Delete </v-btn>
+        </td>
+      </tr>
+      </tbody>
+    </v-table>
   </v-card>
 
 
@@ -33,31 +36,24 @@ export default {
   name: "ItemAdmin",
   data() {
     return {
-      items: [{id: "1", description: "hat"}, {id: "2", description: "gloves"}, {id: "3", description: "scarf"}],
-      inappropriate: null,
-      counterfeit: null,
+      items: [{id: "1", description: "hat", counterfeit: true, inappropriate: false}, {id: "2", description: "gloves", counterfeit: true, inappropriate: true}, {id: "3", description: "scarf", counterfeit: false, inappropriate: true}],
+      toDelete: null
     }
   },
   methods: {
-    async getItems(){
+    async getFlaggedItems(){
       const onSuccess=(resp)=>{
         this.items = resp.data
       }
-      await GatewayService.sendRequest(HttpMethod.GET,"item/all","",onSuccess)
+      await GatewayService.sendRequest(HttpMethod.GET,"item/marked","",onSuccess)
     },
 
-    async markInappropriate(){
-      let itemId = this.inappropriate.id
-      await GatewayService.sendRequest(HttpMethod.POST,`item/inappropriate/${itemId}`,"", this.refresh)
-    },
-
-    async markCounterfeit(){
-      let itemId = this.counterfeit.id
-      await GatewayService.sendRequest(HttpMethod.PUT,`item/counterfeit/${itemId}`,"", this.refresh)
+    async deleteItem(itemId){
+      await GatewayService.sendRequest(HttpMethod.DELETE,`item/${itemId}`,"",this.refresh)
     },
 
     async refresh(){
-      await this.getItems()
+      await this.getFlaggedItems()
     }
 
   },

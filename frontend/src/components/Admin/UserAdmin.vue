@@ -7,7 +7,7 @@
       return-object
       single-line
     ></v-select>
-    <v-btn color="success" class="mr-4" @click="blockUser">Block User</v-btn>
+    <v-btn color="red" class="mr-4" @click="blockUser">Block User</v-btn>
   </v-card>
   <v-divider></v-divider>
   <v-card>
@@ -18,7 +18,7 @@
       return-object
       single-line
     ></v-select>
-    <v-btn color="success" class="mr-4" @click="suspendUser">Suspend User</v-btn>
+    <v-btn color="red" class="mr-4" @click="suspendUser">Suspend User</v-btn>
   </v-card>
   <v-divider></v-divider>
   <v-card>
@@ -43,7 +43,7 @@ export default {
   name: "UserAdmin",
   data() {
     return {
-      users: [{id: "1", name: "Matt"}, {id: "2", name: "Austin"}, {id: "3", name: "Tori"}],
+      users: [{id: "1", name: "Matt"}, {id: "2", name: "Austin"}, {id: "3", name: "Tori"},{id: "4", name: "Katharine"}],
       suspendedUsers:[],
       toBlock: null,
       toSuspend: null,
