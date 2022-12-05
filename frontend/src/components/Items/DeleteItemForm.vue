@@ -21,17 +21,12 @@ export default {
   },
   methods: {
     async deleteItem() {
-      try {
-        await axios.delete("/api/item/" + this.itemId, {
-          headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-          }
-        })
-        alert("Item " + this.itemId + " successfully deleted")
-        this.$refs.form.reset()
-      } catch (e) {
-        alert("ERROR\n" + e)
-      }
+      await axios.delete("/api/item/" + this.itemId, {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+      }).then(r => alert("Successfully deleted " + this.itemId))
+        .catch(reason => console.log(reason))
     }
   }
 }

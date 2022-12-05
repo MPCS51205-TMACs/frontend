@@ -3,7 +3,7 @@
     <v-tabs bg-color="blue-darken-1"
             grow
             v-model="tab">
-      <v-tab value="get">Buy Now List</v-tab>
+      <v-tab value="get">All Items</v-tab>
       <v-tab value="search">Search</v-tab>
       <v-tab value="post">Create Item</v-tab>
       <v-tab value="put">Update Item</v-tab>

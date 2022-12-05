@@ -21,6 +21,11 @@
         label="Credit Card Number"
         required
       ></v-text-field>
+      <v-text-field
+        v-model="address"
+        label="Home Address"
+        required
+      ></v-text-field>
       <v-checkbox v-model="isAdmin" label="Admin"></v-checkbox>
     </v-form>
     <v-div>
@@ -42,6 +47,7 @@ export default {
       name: '',
       email: '',
       password: '',
+      address: '',
       paymentMethod: null,
       isAdmin: false,
       signupSuccess: false,
@@ -55,9 +61,11 @@ export default {
         email: this.email,
         password: this.password,
         admin: this.isAdmin,
-        paymentMethod: this.paymentMethod
+        paymentMethod: this.paymentMethod,
+        homeAddress: this.address
       }).then(r => {
         console.log("Admin: " + this.isAdmin.toString())
+        console.log(r.data.homeAddress)
         this.error = false
         this.$emit('signupStatus', this.signupSuccess = true)
       }).catch(reason => {

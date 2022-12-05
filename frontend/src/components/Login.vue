@@ -59,7 +59,6 @@ export default {
         password: this.password
       }).then(r => {
         localStorage.setItem("token", r.data.token);
-        localStorage.setItem("isAdmin", r.data.admin);
         this.$router.push("/home");
       }).catch(reason => {
         this.loginFail = true

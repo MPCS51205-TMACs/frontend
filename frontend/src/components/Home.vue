@@ -2,6 +2,7 @@
   <header>
     <v-toolbar class="header d-flex justify-center align-center flex-column">
       <v-toolbar-title class="text-white text-h2 text-center font-weight-bold">Webay</v-toolbar-title>
+      <v-btn prepend-icon="mdi-door" class="bg-red" @click="logout">Logout</v-btn>
     </v-toolbar>
     <v-card>
       <v-tabs bg-color="blue-darken-4"
@@ -37,8 +38,14 @@ export default {
   },
   data() {
     return {
-      tab: null,
-      admin: localStorage.getItem("isAdmin")
+      tab: null
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("token")
+      alert("Logging you out...")
+      this.$router.push("/")
     }
   }
 }
