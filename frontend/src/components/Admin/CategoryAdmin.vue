@@ -63,7 +63,7 @@ export default {
     },
 
     async modifyCategory(){
-      await GatewayService.sendRequest(HttpMethod.PUT,`category/${this.toModify.id}`,"",this.refresh,()=>{},this.modification)
+      await GatewayService.sendRequest(HttpMethod.PUT,`category/${this.toModify.id}`,"",this.refresh,()=>{},{categoryDescription:this.modification})
     },
 
     async refresh(){

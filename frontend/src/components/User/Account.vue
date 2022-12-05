@@ -1,75 +1,92 @@
 <template>
   <v-card ref="account">
     <v-card-item>
+      <v-btn color="red" class="mr-4" size="small" @click="deleteAccount">Delete Account</v-btn>
+      <v-btn color="red" class="mr-4" size="small" @click="getMe">Refresh</v-btn>
       <v-container>
         <v-row
           justify="space-between"
         >
           <v-col>
-          <v-table v-if="emails.length" class="ma-1">
-            <thead>
-            <tr>
-              <th>
-                PROFILE INFORMATION
-              </th>
-              <th></th>
-              <th>Update</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td><b>Name: </b></td>
-              <td align="left">your name</td>
-              <td><v-form
-                ref="form"
-                v-model="valid"
-                lazy-validation
-                class="ma-2"
-              >
-                <v-text-field
-                  v-model="Name"
-                  label="Name"
-                  required
-                ></v-text-field>
-                <v-btn color="success" class="mr-4" size="small" @click="updateProfile">Update Name</v-btn>
-              </v-form></td>
-            </tr>
-            <tr>
-              <td><b>Email: </b></td>
-              <td align="left">your email</td>
-              <td><v-form
-              ref="form"
-              class="ma-2"
-            >
-              <v-text-field
-                label="Name"
-                required
-                size="small"
-              ></v-text-field>
-              <v-btn color="success" class="mr-4" size="small" @click="updateProfile">Update Name</v-btn>
-            </v-form>
-            </td>
-            </tr>
-            <tr>
-              <td><b>Payment info: </b></td>
-              <td align="left">payment info</td>
-              <td><v-form
-              ref="form"
-              v-model="valid"
-              lazy-validation
-              class="ma-2"
-            >
-              <v-text-field
-                v-model="Name"
-                label="Name"
-                required
-              ></v-text-field>
-              <v-btn color="success" class="mr-4" size="small" @click="updateProfile">Update Name</v-btn>
-            </v-form>
-            </td>
-            </tr>
-            </tbody>
-          </v-table>
+            <v-table>
+              <thead>
+              <tr>
+                <th>
+                  PROFILE INFORMATION
+                </th>
+                <th>Update</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><b>Name: </b></td>
+                <td>
+                  <v-form
+                    ref="form"
+                    lazy-validation
+                    class="ma-2"
+                  >
+                    <v-text-field
+                      v-model="update.name"
+                      :placeholder = "me.name"
+                      required
+                    ></v-text-field>
+                  </v-form>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Email: </b></td>
+                <td>
+                  <v-form
+                    ref="form1"
+                    class="ma-2"
+                  >
+                    <v-text-field
+                      v-model:id="update.email"
+                      :placeholder = "me.email"
+                      required
+                      size="small"
+                    ></v-text-field>
+                  </v-form>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Payment info: </b></td>
+                <td>
+                  <v-form
+                    ref="form2"
+                    lazy-validation
+                    class="ma-2"
+                  >
+                    <v-text-field
+                      v-model="update.paymentMethod"
+                      :placeholder="me.paymentMethod"
+                      required
+                    ></v-text-field>
+                  </v-form>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Home Address: </b></td>
+                <td>
+                  <v-form
+                    ref="form3"
+                    lazy-validation
+                    class="ma-2"
+                  >
+                    <v-text-field
+                      v-model="update.homeAddress"
+                      :placeholder="me.homeAddress"
+                      required
+                    ></v-text-field>
+                  </v-form>
+                </td>
+              </tr>
+              </tbody>
+            </v-table>
+            <v-btn
+              color="success" class="mr-4" size="small" @click="updateProfile">Update Profile
+            </v-btn>
           </v-col>
 
         </v-row>
@@ -86,7 +103,7 @@
           color="error"
           class="mr-1 pb-1"
         ></v-icon>
-        {{this.emails.length}} Notifications!
+        {{ this.emails.length }} Notifications!
         <v-card-actions>
           <v-btn @click="expand = !expand">
             {{ !expand ? 'Show All' : 'Hide' }}
@@ -97,41 +114,41 @@
     <v-divider></v-divider>
 
     <v-expand-transition>
-        <div class="py-2" v-if="expand">
-          <v-list lines="three">
-            <div v-if="!emails.length"><h3 style="margin-left:20px">No notifications yet.</h3></div>
-          </v-list>
-          <v-table v-if="emails.length">
-            <thead>
-            <tr>
-              <th>
-                FROM
-              </th>
-              <th>
-                DATE SEND
-              </th>
-              <th>
-                SUBJECT
-              </th>
-              <th >
-                MESSAGE
-              </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr
-              v-for="email in emails"
-              :key="email.email_id"
-            >
-              <td>{{ email.senderEmail }}</td>
-              <td>{{ email.sentDate }}</td>
-              <td>{{ email.subject }}</td>
-              <td>{{ email.body }}</td>
-            </tr>
+      <div class="py-2" v-if="expand">
+        <v-list lines="three">
+          <div v-if="!emails.length"><h3 style="margin-left:20px">No notifications yet.</h3></div>
+        </v-list>
+        <v-table v-if="emails.length">
+          <thead>
+          <tr>
+            <th>
+              FROM
+            </th>
+            <th>
+              DATE SEND
+            </th>
+            <th>
+              SUBJECT
+            </th>
+            <th>
+              MESSAGE
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+            v-for="email in emails"
+            :key="email.email_id"
+          >
+            <td>{{ email.senderEmail }}</td>
+            <td>{{ email.sentDate }}</td>
+            <td>{{ email.subject }}</td>
+            <td>{{ email.body }}</td>
+          </tr>
 
-            </tbody>
-          </v-table>
-        </div>
+          </tbody>
+        </v-table>
+      </div>
     </v-expand-transition>
   </v-card>
 </template>
@@ -153,12 +170,16 @@
  *     }
  */
 import axios from "axios";
+import {GatewayService, HttpMethod} from "@/service/gatewayService";
+
 export default {
   name: "Account",
   data() {
     return {
       emails: this.getEmails()
-      ,expand: false
+      , expand: false,
+      update: {name: null, email: null, paymentMethod: null, homeAddress: null},
+      me: {name: null, email:null, paymentMethod: null, homeAddress:null}
     }
   },
   created() {
@@ -167,14 +188,33 @@ export default {
   methods: {
     async getEmails() {
       try {
-              const response = await axios.get("api/api/v1/notification/email");
-              this.emails = response.data;
-            } catch (e) {
-              console.log("Could not retrieve emails")
-              //alert("ERROR\n" + e)
-       }
+        const response = await axios.get("api/api/v1/notification/email");
+        this.emails = response.data;
+      } catch (e) {
+        console.log("Could not retrieve emails")
+      }
+    },
+    async deleteAccount() {
+      await GatewayService.sendRequest(HttpMethod.DELETE, "user", "", (resp) => {
+        this.$router.push("/")
+      })
+    },
+
+    async updateProfile() {
+      await GatewayService.sendRequest(HttpMethod.PUT, "user", "", (resp) => {this.getMe()}, () => {}, this.update)
+      this.$refs.form.reset()
+      this.$refs.form1.reset()
+      this.$refs.form2.reset()
+      this.$refs.form3.reset()
+    },
+
+    async getMe(){
+      await GatewayService.sendRequest(HttpMethod.GET,"user","",(resp)=>{this.me=resp.data})
     }
-   }
+  },
+  mounted() {
+    this.getMe()
+  }
 }
 </script>
 <style scoped>

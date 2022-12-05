@@ -34,8 +34,8 @@
         single-line
         multiple
       >
-
       </v-select>
+      <v-icon color="blue" class="mr-4" @click="getCategories" icon="mdi-refresh"></v-icon>
       <v-btn color="success" class="mr-4" @click="createWatchlists">Create Item</v-btn>
     </v-form>
   </div>
@@ -61,7 +61,7 @@ export default {
   methods: {
     async createWatchlists() {
       let onSuccess = (resp) => {
-        console.log("!")
+        alert("Watchlist created")
       }
       let request = {
         name: this.name,
@@ -72,6 +72,7 @@ export default {
       }
       await GatewayService.sendRequest(HttpMethod.POST, "watchlist", "", onSuccess, () => {
       }, request)
+      this.$refs.form.reset()
     },
 
     async getCategories(){
