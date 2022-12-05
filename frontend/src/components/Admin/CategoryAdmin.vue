@@ -37,7 +37,7 @@ export default {
   name: "CategoryAdmin",
   data() {
     return {
-      categories: [{id: "1", categoryDescription: "Sports"}],
+      categories: [],
       newCategory:null,
       toDelete: null,
       toModify: null,

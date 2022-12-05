@@ -38,14 +38,14 @@
                 <td><b>Email: </b></td>
                 <td>
                   <v-form
-                    ref="form1"
+                    ref="form"
+                    lazy-validation
                     class="ma-2"
                   >
                     <v-text-field
-                      v-model:id="update.email"
+                      v-model="update.email"
                       :placeholder = "me.email"
                       required
-                      size="small"
                     ></v-text-field>
                   </v-form>
                 </td>

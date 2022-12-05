@@ -36,7 +36,7 @@ export default {
   name: "ItemAdmin",
   data() {
     return {
-      items: [{id: "1", description: "hat", counterfeit: true, inappropriate: false}, {id: "2", description: "gloves", counterfeit: true, inappropriate: true}, {id: "3", description: "scarf", counterfeit: false, inappropriate: true}],
+      items: [],
       toDelete: null
     }
   },

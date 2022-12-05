@@ -43,7 +43,7 @@ export default {
   name: "UserAdmin",
   data() {
     return {
-      users: [{id: "1", name: "Matt"}, {id: "2", name: "Austin"}, {id: "3", name: "Tori"},{id: "4", name: "Katharine"}],
+      users: [],
       suspendedUsers:[],
       toBlock: null,
       toSuspend: null,
