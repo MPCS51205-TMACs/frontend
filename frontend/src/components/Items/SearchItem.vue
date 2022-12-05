@@ -94,7 +94,7 @@ export default {
           "Authorization": "Bearer " + localStorage.getItem("token")
         }
       }).then(r => {
-        this.items = r.data
+        this.items = r.data.filter(item => item.bought === false)
       }).catch(reason => console.log(reason))
       this.$refs.form.reset()
     },
@@ -115,7 +115,7 @@ export default {
           "Authorization": "Bearer " + localStorage.getItem("token")
         }
       }).then(r => {
-        this.items = r.data
+        this.items = r.data.filter(item => item.bought === false)
       }).catch(reason => console.log(reason))
     },
     async thisBuyNow(item) {
