@@ -17,7 +17,7 @@
     <v-window v-model="tab">
       <v-window-item value="all">
         <h2 align="center" class="font-weight-light mt-3"> </h2>
-        <AllForm ref="allComponentRef"/>
+        <AllForm ref="allComponentRef" :timeDateChild="timeDate"/>
       </v-window-item>
 
       <v-window-item value="live">
@@ -27,7 +27,7 @@
 
       <v-window-item value="bid">
         <h2 align="center" class="font-weight-light mt-3"> </h2>
-        <BidForm/>
+        <BidForm :timeDateChild="timeDate"/>
       </v-window-item>
 
       <v-window-item value="stop">

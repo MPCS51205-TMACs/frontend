@@ -57,10 +57,10 @@
             Item Id
           </th>
           <th class="text-left">
-            start time
+            start time [UTC]
           </th>
           <th class="text-left">
-            end time
+            end time [UTC]
           </th>
           <th class="text-right">
             start price [$]
@@ -99,6 +99,7 @@ export default {
       showFinalized: true,
     }
   },
+  props: ["timeDateChild"],
   mounted() {
     this.getAuctions();
   },
@@ -169,7 +170,18 @@ export default {
       }
       return should;
     }
-  },    
+  }, 
+  watch: { 
+    timeDateChild: { // watch it
+      immediate: true,
+      // deep: true,
+      handler(newValue,oldValue){
+        // console.log('Prop changed: ', newValue, ' | was: ', oldValue);
+        this.getAuctions();
+        // console.log(this.auctions);
+      }
+    }
+  }   
 }
 </script>
 

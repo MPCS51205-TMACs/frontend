@@ -8,10 +8,10 @@
             Item Id
           </th>
           <th class="text-left">
-            start time
+            start time [UTC]
           </th>
           <th class="text-left">
-            end time
+            end time [UTC]
           </th>
           <th class="text-left">
             start price [$]

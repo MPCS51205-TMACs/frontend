@@ -12,10 +12,10 @@
             Item Id
           </th>
           <th class="text-left">
-            start time
+            start time [UTC]
           </th>
           <th class="text-left">
-            end time
+            end time [UTC]
           </th>
           <th class="text-left">
             start price [$]
@@ -68,23 +68,10 @@ export default {
     }
   },
   props: ["timeDateChild"],
-  // {
-  //   timeDate: {
-  //       type: Date,
-  //       default: new Date()
-  //   }
-  // },
-  
+ 
   mounted() {
     this.getActiveAuctions();
   },
-  // created() {
-  //   // this.getActiveAuctions();
-  //   this.timer = setInterval(this.getActiveAuctions, 1000);
-  // },
-  // beforeDestroy() {
-  //   this.cancelAutoUpdate();
-  // },
   methods: {
     async getActiveAuctions() {
       try {
