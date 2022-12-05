@@ -92,7 +92,7 @@
           >
             <td>{{receipt.receipt_id}}</td>
             <td>{{receipt.time_processed}}</td>
-            <td>{{this.convertToDollars(receipt.total_cost_str)}}</td>
+            <td>{{receipt.bill.total_cost_str}}</td>
           </tr>
           </tbody>
         </v-table>
