@@ -69,7 +69,7 @@
     <v-expand-transition>
       <div class="py-2" v-if="expand">
         <v-list lines="three">
-          <h3 style="margin-left:20px">No receipts yet.</h3>
+          <h3 style="margin-left:20px" v-if="!receipts.length">No receipts yet.</h3>
         </v-list>
         <v-table v-if="receipts.length">
           <thead>
