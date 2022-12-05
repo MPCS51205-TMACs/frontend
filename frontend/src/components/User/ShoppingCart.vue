@@ -92,7 +92,7 @@
           >
             <td>{{receipt.receipt_id}}</td>
             <td>{{receipt.time_processed}}</td>
-            <td>{{this.convertToDollars(receipt.bill.total_cost_cents/100 + (receipt.bill.total_cost_cents*this.tax)/100)}}</td>
+            <td>{{this.convertToDollars(receipt.total_cost_str)}}</td>
           </tr>
           </tbody>
         </v-table>
@@ -125,13 +125,11 @@ export default {
       tax: 0,
       shippingCost: 0,
       taxRate: .08,
-      userId: '',
-      //token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhMjY5YThmMi1hYmRhLTRlYmQtYjdkYi0xN2Q1OTlkMDhhMzkiLCJhdWQiOiJtcGNzNTEyMDUiLCJyZXZvY2F0aW9uSWQiOiIxZjI1NzZjZi01ZmNmLTQ5MDQtYWNhMy0xZDExMDU3NzA1NTkiLCJpc3MiOiJ1c2VyLXNlcnZpY2UiLCJuYW1lIjoiaDBQZmY3bENCUWN0QXdmIiwiZXhwIjoxNjcwMTczMDExLCJpYXQiOjE2NzAxMjk4MTEsImVtYWlsIjoiaDBQZmY3bENCUWN0QXdmQG1wY3MuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl19.0Ztu570lUNvsUqay918igbHsDgbIM9GQ8RODRXhun2g'
+      userId: ''
     }
   },
   created() {
     this.getShoppingCart();
-    //this.calculateCart();
     this.timer = setInterval(this.getShoppingCart, 3000);
     //this.getUserId()
   },
@@ -162,7 +160,8 @@ export default {
         this.cartItems = response.data.items;
         this.total = response.data.total_cost_cents;
         this.calculateCart();
-        this.convertToDollars()
+        this.convertToDollars();
+        this.getReceiptsForUser();
         console.log(response.data.items);
       } catch (e) {
         console.log("Could not retrieve shopping cart.")
