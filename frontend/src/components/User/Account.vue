@@ -176,7 +176,8 @@ export default {
   name: "Account",
   data() {
     return {
-      emails: this.getEmails()
+      emails: this.getEmails(),
+      userId: ''
       , expand: false,
       update: {name: null, email: null, paymentMethod: null, homeAddress: null},
       me: {name: null, email:null, paymentMethod: null, homeAddress:null}
@@ -186,12 +187,33 @@ export default {
     this.timer = setInterval(this.getEmails, 1000);
   },
   methods: {
+    async getUserId(){
+      try {
+        const url = "/api/user"
+        const response = await axios.get(url, {
+          headers: {
+            'Authorization': "Bearer " + localStorage.getItem("token")
+            //'authentication': "Bearer" + this.token
+          }
+        });
+        this.userId = response.data.id;
+        console.log('userId')
+      } catch (e) {
+        console.log("Could not retrieve user id." + response)
+      }
+    },
     async getEmails() {
       try {
-        const response = await axios.get("api/api/v1/notification/email");
+        const url = "/api/api/v1/notification/email"
+        const response = await axios.get(url, {
+          headers: {
+            'content-type': 'application/json',
+            'Authorization': "Bearer " + localStorage.getItem("token")
+          }
+        })
         this.emails = response.data;
       } catch (e) {
-        console.log("Could not retrieve emails")
+        console.log("Could not retrieve emails", e)
       }
     },
     async deleteAccount() {

@@ -69,7 +69,7 @@
     <v-expand-transition>
       <div class="py-2" v-if="expand">
         <v-list lines="three">
-          <h3 style="margin-left:20px">No receipts yet.</h3>
+          <h3 style="margin-left:20px" v-if="!receipts.length">No receipts yet.</h3>
         </v-list>
         <v-table v-if="receipts.length">
           <thead>
@@ -142,7 +142,6 @@ export default {
         const response = await axios.get(url, {
           headers: {
             'Authorization': "Bearer " + localStorage.getItem("token")
-            //'authentication': "Bearer" + this.token
           }
         });
         this.userId = response.data.id;
@@ -156,7 +155,7 @@ export default {
         const url = "/api/carts/" + this.userId
         const response = await axios.get(url, {
           headers: {
-            'content-type': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': "Bearer " + localStorage.getItem("token")
           }
         });
@@ -174,12 +173,14 @@ export default {
       try {
         const url = "/api/carts/item"
         const response = await axios.delete(url, {
-          data: { user_id: this.userId, item_id: item_id },
-          headers: {
-            'content-type': 'application/json',
-            'Authorization': "Bearer" + localStorage.getItem("token")
+          data: {
+            user_id: this.userId, item_id: item_id },
+            headers: {
+              'content-type': 'application/json',
+              'Authorization': "Bearer " + localStorage.getItem("token")
+            }
           }
-        });
+        );
         alert("Removing item " + item_id + " from cart.\n")
         this.getShoppingCart()
       } catch (e) {
@@ -201,7 +202,6 @@ export default {
             }
           }
         );
-        alert("could not checkout")
         console.log(response)
         this.getShoppingCart()
       } catch (e) {
